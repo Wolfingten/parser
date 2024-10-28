@@ -188,13 +188,13 @@ class Parser(object):
             if args.amp:
                 from torch.distributed.algorithms.ddp_comm_hooks.default_hooks import fp16_compress_hook
                 self.model.register_comm_hook(dist.group.WORLD, fp16_compress_hook)
-        if args.wandb and is_master():
-            import wandb
-            # start a new wandb run to track this script
-            wandb.init(config=args.primitive_config,
-                       project=args.get('project', self.NAME),
-                       name=args.get('name', args.path),
-                       resume=self.args.checkpoint)
+        #if args.wandb and is_master():
+        #    import wandb
+        #    # start a new wandb run to track this script
+        #    wandb.init(config=args.primitive_config,
+        #               project=args.get('project', self.NAME),
+        #               name=args.get('name', args.path),
+        #               resume=self.args.checkpoint)
         self.step, self.epoch, self.best_e, self.patience = 1, 1, 1, patience
         # uneven batches are excluded
         self.n_batches = min(gather(len(loader))) if is_dist() else len(loader)
